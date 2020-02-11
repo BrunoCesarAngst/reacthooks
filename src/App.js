@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // com useState criamos o estado que pertence a função.
 // com useEffect podemos sobrepor os métodos do ciclo de vida
 // com useMemo vamos guardar o valor de retorno de uma função e ela não
 // precisará refazer o cálculo para obter o valor de retorno, já que este
 // estará armazenado.
+// com useCallback semelhante ao useMemo, mas, retorna uma função, economizando
+// processamento poupando locação de memória
 
 function App() {
   // para cada tipo de informação dentro do componente nos teremos um state
@@ -19,13 +21,15 @@ function App() {
   // 1º o state e 2º a atualização desse state.
 
   // a função do button
-  function handleAdd() {
+  // function handleAdd() {
+  // usando useCallback
+  const handleAdd = useCallback(() => {
     setTechs([...techs, newTech]);
     // chamando o SetTechs do useState que copia todas as techs e acrescenta
     // outra tecnologia de newTech o valor que vem do input.
     setNewTech('');
     // aqui "resetamos" o input
-  }
+  }, [newTech, techs]);
 
   // useEffect para ciclo de vida
   // executando uma única vez, para montar o componente em tela.
