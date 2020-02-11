@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 // com useState criamos o estado que pertence a função.
 // com useEffect podemos sobrepor os métodos do ciclo de vida
+// com useMemo vamos guardar o valor de retorno de uma função e ela não
+// precisará refazer o cálculo para obter o valor de retorno, já que este
+// estará armazenado.
 
 function App() {
   // para cada tipo de informação dentro do componente nos teremos um state
@@ -46,6 +49,11 @@ function App() {
     // toda vez que o valor de techs for alterado.
   }, [techs]);
 
+  // usando useMemo
+  // guarda o valor na variável e só altera se for acrescentado novos valores em
+  // techs
+  const techsSize = useMemo(() => techs.length, [techs]);
+
   return (
     <>
       <ul>
@@ -53,6 +61,8 @@ function App() {
           <li key={t}>{t}</li>
         ))}
       </ul>
+      <strong>Você tem {techsSize} tecnologia!</strong>
+      <br />
       {/* toda vez que for alterado o valor do input o setNewState recebe o valor do value */}
       <input value={newTech} onChange={e => setNewTech(e.target.value)} />
       {/* o onClick chama/executa a função handleAdd */}
